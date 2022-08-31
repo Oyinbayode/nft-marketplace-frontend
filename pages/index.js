@@ -6,7 +6,7 @@ export default function Home() {
     const { data: listedNfts, isFetching: fetchingListedNfts } = useMoralisQuery(
         // TableName
         // Function for the query
-        "ActiveItem",
+        "ItemListed",
         (query) => query.limit(10).descending("tokenId")
     )
     console.log(listedNfts)
