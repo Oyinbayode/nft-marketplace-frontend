@@ -17,7 +17,7 @@ export default function GraphExample() {
     const { loading, error, data } = useQuery(GET_ACTIVE_ITEM)
     if (loading) return <p>Loading...</p>
     if (error) return <p>Error :(</p>
-    console.log(data)
+
     return (
         <div>
             <h1>Graph Example</h1>

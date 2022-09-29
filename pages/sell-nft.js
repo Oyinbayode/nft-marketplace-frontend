@@ -21,11 +21,9 @@ export default function Home() {
     const { runContractFunction } = useWeb3Contract()
 
     const approveAndList = async (data) => {
-        console.log("approving...")
-
         const nftAddress = data.data[0].inputResult
         const tokenId = data.data[1].inputResult
-        console.log(nftAddress, tokenId)
+
         const price = ethers.utils.parseUnits(data.data[2].inputResult, "ether").toString()
 
         const approveOptions = {
@@ -51,7 +49,6 @@ export default function Home() {
     }
 
     async function handleApproveSuccess(nftAddress, tokenId, price) {
-        console.log("approve success")
         const listOptions = {
             abi: nftMarketplaceAbi,
             contractAddress: marketplaceAddress,

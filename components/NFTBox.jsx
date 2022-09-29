@@ -53,7 +53,7 @@ export default function NFTBox({ price, nftAddress, tokenId, marketplaceAddress,
 
     async function updateUI() {
         const tokenURI = await getTokenURI()
-        console.log(`The TokenURI is ${tokenURI}`)
+
         // We are going to cheat a little here...
         if (tokenURI) {
             // IPFS Gateway: A server that will return IPFS files from a "normal" URL.
