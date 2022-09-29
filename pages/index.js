@@ -2,29 +2,30 @@ import Image from "next/image"
 import styles from "../styles/Home.module.css"
 import { useMoralis, useMoralisQuery } from "react-moralis"
 import NFTBox from "../components/NFTBox"
+import { useQuery } from "@apollo/client"
+import networkMapping from "../constants/networkMapping.json"
+import { GET_ACTIVE_ITEMS } from "../constants/subgraphQueries"
 
 export default function Home() {
-    const { isWeb3Enabled } = useMoralis()
-    const { data: listedNfts, isFetching: fetchingListedNfts } = useMoralisQuery(
-        // TableName
-        // Function for the query
-        "ActiveItem",
-        (query) => query.limit(10).descending("tokenId")
-    )
+    const { isWeb3Enabled, chainId } = useMoralis()
+    const chainString = chainId ? parseInt(chainId).toString() : "31337"
+    console.log(chainString)
+    const marketplaceAddress = networkMapping[chainString].NftMarketplace[0]
+
+    const { loading, error, data: listedNfts } = useQuery(GET_ACTIVE_ITEMS)
     console.log(listedNfts)
 
     return (
         <div className="container mx-auto">
-            <hi className="py-4 px-4 font-bold text-2xl ">Recently Listed</hi>
+            <h1 className="py-4 px-4 font-bold text-2xl ">Recently Listed</h1>
             <div className="grid grid-cols-3 gap-4">
                 {isWeb3Enabled ? (
-                    fetchingListedNfts ? (
+                    loading ? (
                         <div>Loading...</div>
                     ) : (
-                        listedNfts.map((nft) => {
-                            console.log(nft.attributes)
-                            const { tokenId, price, nftAddress, marketplaceAddress, seller } =
-                                nft.attributes
+                        listedNfts.activeItems.map((nft) => {
+                            console.log(nft)
+                            const { tokenId, price, nftAddress, seller } = nft
                             return (
                                 <div
                                     key={nft.id}

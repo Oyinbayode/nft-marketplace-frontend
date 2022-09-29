@@ -82,15 +82,6 @@ export default function NFTBox({ price, nftAddress, tokenId, marketplaceAddress,
     const isOwnedByUser = seller === account || seller === undefined
     const formattedSellerAddress = isOwnedByUser ? "you" : truncateStr(seller || "", 15)
 
-    const handleCardClick = () => {
-        isOwnedByUser
-            ? setShowModal(true)
-            : buyItem({
-                  onError: (error) => console.log(error),
-                  onSuccess: handleBuyItemSuccess,
-              })
-    }
-
     const handleBuyItemSuccess = async (tx) => {
         await tx.wait(1)
         dispatch({
@@ -99,6 +90,15 @@ export default function NFTBox({ price, nftAddress, tokenId, marketplaceAddress,
             title: "Item Bought",
             position: "topR",
         })
+    }
+
+    const handleCardClick = () => {
+        isOwnedByUser
+            ? setShowModal(true)
+            : buyItem({
+                  onError: (error) => console.log(error),
+                  onSuccess: handleBuyItemSuccess,
+              })
     }
 
     return (

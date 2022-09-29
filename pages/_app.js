@@ -3,6 +3,12 @@ import { MoralisProvider } from "react-moralis"
 import Header from "../components/Header"
 import Head from "next/head"
 import { NotificationProvider } from "web3uikit"
+import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client"
+
+const client = new ApolloClient({
+    cache: new InMemoryCache(),
+    uri: "https://api.studio.thegraph.com/query/34856/nft-marketplace/v0.0.3",
+})
 
 function MyApp({ Component, pageProps }) {
     return (
@@ -12,14 +18,13 @@ function MyApp({ Component, pageProps }) {
                 <meta name="description" content="NFT Marketplace" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <MoralisProvider
-                appId="3K9pM3owoZT5am5BeRXOXFwBe01AmqWeKVbuGNrV"
-                serverUrl="https://urhkytejq2ib.usemoralis.com:2053/server"
-            >
-                <NotificationProvider>
-                    <Header />
-                    <Component {...pageProps} />
-                </NotificationProvider>
+            <MoralisProvider initializeOnMount={false}>
+                <ApolloProvider client={client}>
+                    <NotificationProvider>
+                        <Header />
+                        <Component {...pageProps} />
+                    </NotificationProvider>
+                </ApolloProvider>
             </MoralisProvider>
         </div>
     )

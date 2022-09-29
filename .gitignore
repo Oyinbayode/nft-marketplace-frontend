@@ -1,6 +1,8 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 .encryptedKey.json
 .env
+.env.local
+.env.example
 # dependencies
 /node_modules
 /.pnp
@@ -31,3 +33,6 @@ yarn-error.log*
 
 # vercel
 .vercel
+
+# keys
+keys.js
